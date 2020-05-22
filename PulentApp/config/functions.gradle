@@ -1,0 +1,35 @@
+def BOOLEAN = "boolean"
+def STRING = "String"
+def INT = "int"
+def TRUE = "true"
+def FALSE = "false"
+def DEBUG_MODE = "DEBUG_MODE"
+
+ext.BOOLEAN = BOOLEAN
+ext.STRING = STRING
+ext.INT = INT
+ext.TRUE = TRUE
+ext.FALSE = FALSE
+ext.DEBUG_MODE = DEBUG_MODE
+
+def MUSIC_API = "music_api"
+ext.MUSIC_API = MUSIC_API
+
+def getCustomProperty(key){
+    Properties prop = new Properties()
+    def propFile = file("../config/config.properties")
+    if(propFile.canRead()){
+        prop.load(new FileInputStream(propFile))
+        if(prop != null && prop.containsKey(key)){
+            println 'My Key ' + key + '= ' + prop[key]
+            return prop[key]
+        }else{
+            println 'Property ' + key + ' not found in the file'
+        }
+    }else{
+        println 'The property' + key + ' not found'
+    }
+    return null
+}
+
+ext.getCustomProperty = this.&getCustomProperty
